@@ -1,9 +1,13 @@
 import { createStore } from 'vuex';
 
 export default createStore({
-  state: {},
+  state: { consentData: {} as any },
   getters: {},
-  mutations: {},
+  mutations: {
+    updateConsentData: (state, data) => {
+      state.consentData = data;
+    }
+  },
   actions: {},
-  modules: {},
+  modules: {}
 });

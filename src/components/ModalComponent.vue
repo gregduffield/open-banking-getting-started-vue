@@ -16,6 +16,10 @@ function _show() {
   modal.show();
 }
 
+function _hide() {
+  modal.hide();
+}
+
 function ok() {
   props.data.promise.resolve();
   modal.hide();
@@ -26,7 +30,7 @@ function cancel() {
   modal.hide();
 }
 
-defineExpose({ show: _show });
+defineExpose({ show: _show, hide: _hide });
 </script>
 
 <template>

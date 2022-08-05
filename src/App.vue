@@ -14,8 +14,27 @@
   </modal-component-vue>
   <modal-component-vue title="Consent" :data="consentData" ref="consentModal">
     <template #body
-      ><certua-consent :apiConfig="apiConfig" :metadata="consentData">
-      </certua-consent>
+      ><certua-ob-consent
+        v-if="!!consentData"
+        :apiConfig="JSON.parse(apiConfig)"
+        :metadata="consentData"
+      >
+      </certua-ob-consent>
+    </template>
+    <template #okButtonText>Remove</template>
+  </modal-component-vue>
+  <modal-component-vue
+    title=""
+    :data="utilityShellData"
+    ref="utilityShellModal"
+  >
+    <template #body>
+      <certua-ob-utility-shell
+        v-if="!!utilityShellData"
+        :apiConfig="JSON.parse(apiConfig)"
+        :metadata="utilityShellData"
+      >
+      </certua-ob-utility-shell>
     </template>
     <template #okButtonText>Remove</template>
   </modal-component-vue>
@@ -36,14 +55,16 @@ import { Modal } from 'bootstrap';
 import { CertuaEventbusService } from './certua-event-bus';
 import { tap } from 'rxjs';
 import ModalComponentVue from '@/components/ModalComponent.vue';
+
 const modalRef = ref<HTMLElement | null>(null);
 let modal: Modal;
 let revokeModal = ref(ModalComponentVue);
 let consentModal = ref(ModalComponentVue);
+let utilityShellModal = ref(ModalComponentVue);
 
 let revokeData = ref('');
 let consentData = ref('');
-let consentMetaData = ref(null);
+let utilityShellData = ref(null);
 let consentIsRefresh = false;
 const apiConfig = localStorage.getItem('apiConfig') ?? '';
 
@@ -64,7 +85,7 @@ onMounted(() => {
 certuaEventBus.showConsentModal$
   .pipe(
     tap((data) => {
-      consentData = data.data;
+      consentData.value = data;
       consentIsRefresh = data.isRefresh;
       consentModal.value.show();
     })
@@ -78,4 +99,20 @@ certuaEventBus.showRevokeModal$
     })
   )
   .subscribe();
+certuaEventBus.showUtilityShellModal$
+  .pipe(
+    tap((data) => {
+      utilityShellData.value = data;
+      utilityShellModal.value.show();
+    })
+  )
+  .subscribe();
+
+certuaEventBus.closeDialogEmitter.subscribe((data: string) => {
+  if (data === 'consent') {
+    consentModal.value.hide();
+  } else if (data === 'utility-shell') {
+    utilityShellModal.value.hide();
+  }
+});
 </script>

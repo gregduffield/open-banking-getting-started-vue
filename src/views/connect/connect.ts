@@ -4,11 +4,11 @@ export default defineComponent({
   name: 'ConnectVue',
   data() {
     return {
-      apiConfig: ''
+      apiConfig: JSON.parse(<string>localStorage.getItem('apiConfig'))
     };
   },
   methods: {},
   mounted() {
-    this.apiConfig = <string>localStorage.getItem('apiConfig');
+    this.apiConfig = JSON.parse(<string>localStorage.getItem('apiConfig'));
   }
 });

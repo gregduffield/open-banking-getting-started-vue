@@ -1913,6 +1913,11 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
+direct-vuex@^1.0.0-rc3:
+  version "1.0.0-rc3"
+  resolved "https://registry.yarnpkg.com/direct-vuex/-/direct-vuex-1.0.0-rc3.tgz#6e90e997f353cf60fbbffa9cc0df295a0b122663"
+  integrity sha512-oxpz9kPmxHxAgFC5jKqjziqCbAuGXxwQZbObYGx7D+a3666D6juxERMe40wa0BddzjXk6ZnbkCdD3UCWGTtZJQ==
+
 dns-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/dns-equal/-/dns-equal-1.0.0.tgz#b39e7f1da6eb0a75ba9c17324b34753c47e0654d"
@@ -4708,6 +4713,11 @@ stylehacks@^5.1.0:
     browserslist "^4.16.6"
     postcss-selector-parser "^6.0.4"
 
+sub-events@^1.8.9:
+  version "1.8.9"
+  resolved "https://registry.yarnpkg.com/sub-events/-/sub-events-1.8.9.tgz#57b332134ae1ded738f7c2ddbcd9c1bc81ca8c2e"
+  integrity sha512-RhhA2amqVzL6nO+aiZOqxBCgcA3ZLfp4W9iHFUELwq8132TS7pUReJV+bcRjtNKdqm/Ep1sD/h01eAcTBtgrBQ==
+
 supports-color@^5.3.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
@@ -5044,7 +5054,7 @@ vue@^3.2.13:
     "@vue/server-renderer" "3.2.37"
     "@vue/shared" "3.2.37"
 
-vuex@^4.0.0:
+vuex@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-4.0.2.tgz#f896dbd5bf2a0e963f00c67e9b610de749ccacc9"
   integrity sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q==
