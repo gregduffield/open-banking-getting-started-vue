@@ -1,11 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from 'bootstrap';
-import { ref } from 'Vue';
+import { Subject } from 'rxjs';
+import { ref } from 'vue';
 
 export class CertuaEventbusService {
   private data: any;
   private apiConfig = localStorage.getItem('apiConfig') ?? '';
   private modalRef = ref<HTMLElement | null>(null);
   private modal?: Modal;
+
+  public showConsentModal = new Subject<any>();
+  public showCustomConsentModal = new Subject<any>();
+  public showUtilityShellModal = new Subject<any>();
+  private showRevokeModalSubject = new Subject<any>();
+
+  public showRevokeModal$ = this.showRevokeModalSubject.asObservable();
+  public showConsentModal$ = this.showConsentModal.asObservable();
+  public showCusotmConsentModal$ = this.showCustomConsentModal.asObservable();
 
   constructor() {
     window.CertuaEventBus().$on('open-dialog', (event: any) => {
@@ -33,7 +44,10 @@ export class CertuaEventbusService {
     });
 
     window.CertuaEventBus().$on('redirection-request', (event: any) => {
-      console.log('event from daas: redirection-request', JSON.stringify(event));
+      console.log(
+        'event from daas: redirection-request',
+        JSON.stringify(event)
+      );
       localStorage.setItem('redirectionConf', JSON.stringify(event));
       window.open(event.url, '_self');
     });
@@ -57,27 +71,24 @@ export class CertuaEventbusService {
 
   showConsent(data: any, isRefresh = false) {
     this.data = data;
-    // if (localStorage.getItem('custom-consent') === 'true') {
-    //   const initialState: ModalOptions<CustomConsentComponent> = {
-    //     initialState: {
-    //       apiConfig: this.apiConfig,
-    //       data: data,
-    //       isRefresh,
-    //     },
-    //   };
-    //   this.modalRef = this.bsModalService.show(CustomConsentComponent, initialState);
-    // } else {
-    //   const initialState: ModalOptions<ConsentComponent> = {
-    //     initialState: {
-    //       apiConfig: this.apiConfig,
-    //       data: data,
-    //       isRefresh,
-    //     },
-    //   };
-    //   this.modalRef = this.bsModalService.show(ConsentComponent, initialState);
-    // }
+
+    this.showConsentModal.next({ apiConfig: this.apiConfig, data });
+    if (localStorage.getItem('custom-consent') === 'true') {
+      this.showCustomConsentModal.next({
+        apiConfig: this.apiConfig,
+        data,
+        isRefresh
+      });
+    } else {
+      this.showConsentModal.next({
+        apiConfig: this.apiConfig,
+        data,
+        isRefresh
+      });
+    }
   }
   showRevokeModal(data: any) {
+    this.showRevokeModalSubject.next(data);
     // this.data = data;
     // const initialState: ModalOptions<RevokeModalComponent> = {
     //   initialState: { data },
@@ -98,6 +109,7 @@ export class CertuaEventbusService {
   }
 
   showUtilityShell(data: any) {
+    this.showUtilityShellModal.next(data);
     // this.data = data;
     // const initialState: ModalOptions<UtilityShellComponent> = {
     //   initialState: {

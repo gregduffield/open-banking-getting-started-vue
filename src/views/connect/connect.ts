@@ -1,14 +1,14 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'InstitutionSelectionVue',
+  name: 'ConnectVue',
   data() {
     return {
-      apiConfig: '',
+      apiConfig: ''
     };
   },
   methods: {},
   mounted() {
     this.apiConfig = <string>localStorage.getItem('apiConfig');
-  },
+  }
 });

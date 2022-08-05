@@ -7,10 +7,22 @@
   <div class="row" v-if="showAccessToken">
     <div class="col">
       <label for="username" class="form-label">Username</label>
-      <input id="username" type="text" class="form-control" v-model="username" />
+      <input
+        id="username"
+        type="text"
+        class="form-control"
+        v-model="username"
+      />
       <label for="password" class="label">Password</label>
-      <input id="password" type="password" class="form-control" v-model="password" />
-      <button class="btn btn-primary mt-2" @click="getAccessToken()">Get Token</button>
+      <input
+        id="password"
+        type="password"
+        class="form-control"
+        v-model="password"
+      />
+      <button class="btn btn-primary mt-2" @click="getAccessToken()">
+        Get Token
+      </button>
     </div>
   </div>
   <div class="row my-3">
@@ -21,9 +33,16 @@
   <div class="row" v-if="showContextToken">
     <div class="col">
       <label for="contextToken" class="form-label">Access Token</label>
-      <input id="contextToken" type="text" class="form-control" v-model="accessToken" />
+      <input
+        id="contextToken"
+        type="text"
+        class="form-control"
+        v-model="accessToken"
+      />
 
-      <button class="btn btn-primary" @click="getContextToken()">Get Contex Token</button>
+      <button class="btn btn-primary" @click="getContextToken()">
+        Get Contex Token
+      </button>
     </div>
   </div>
   <div class="row my-3">
@@ -34,14 +53,20 @@
   <div class="row">
     <p>
       This shows the use of the
-      <code>certua-institution-management</code> component which allows you to view your connected accounts, add or
-      remove these.
+      <code>certua-ob-institution-management</code> component which allows you
+      to view your connected accounts, add or remove these.
     </p>
     <div class="col">
-      <button class="btn btn-primary btn-block" routerLink="/accounts" disabled="!apiConfig">View/Add Account</button>
+      <routerLink to="/accounts">
+        <button class="btn btn-primary btn-block" .disabled="!apiConfig">
+          View/Add Account
+        </button>
+      </routerLink>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="chkConsent" @change="consentTypeChanged()" />
-        <label class="form-check-label" for="chkConsent"> Show Custom Consent Dialog </label>
+        <input type="checkbox" id="chkConsent" @change="consentTypeChanged()" />
+        <label class="form-check-label" for="chkConsent">
+          Show Custom Consent Dialog
+        </label>
       </div>
     </div>
   </div>
@@ -52,11 +77,15 @@
   </div>
   <div class="row mt-3">
     <p>
-      This shows the use of the <code>certua-transaction-list</code> component which allows you to view and filter the
-      transactions for yout accounts.
+      This shows the use of the <code>certua-transaction-list</code> component
+      which allows you to view and filter the transactions for yout accounts.
     </p>
     <div class="col">
-      <button class="btn btn-primary btn-block" routerLink="/transactions" disabled="!apiConfig">
+      <button
+        class="btn btn-primary btn-block"
+        routerLink="/transactions"
+        disabled="!apiConfig"
+      >
         View Transactions
       </button>
     </div>

@@ -1,17 +1,22 @@
-import { defineComponent } from 'vue';
-
+import { defineComponent, ref } from 'vue';
+import { Modal } from 'bootstrap';
+const modalRef = ref<HTMLElement | null>(null);
+let modal: Modal;
 export default defineComponent({
   name: 'UtilityShellVue',
-  props: ['data'],
+  props: ['data', 'show'],
   data() {
     return {
       apiConfig: '',
-      metadata: '',
+      metadata: ''
     };
   },
   methods: {},
   mounted() {
     this.apiConfig = <string>localStorage.getItem('apiConfig');
     this.metadata = this.$props.data;
-  },
+    if (modalRef.value) {
+      modal = new Modal(modalRef.value);
+    }
+  }
 });

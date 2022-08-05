@@ -1,26 +1,23 @@
 <div class="container">
   <div class="row">
     <div class="col-10">
-      <h2>Accounts</h2>
-      <routerLink to="/connect">
-        <button class="btn btn-primary float-end">Add Account</button>
-      </routerLink>
+      <h2>Connect an account</h2>
     </div>
   </div>
   <div class="row">
     <div class="col-10">
-      <certua-ob-institution-management
+      <certua-ob-institution-selection
         :apiConfig="apiConfig"
-        askConsentOnRefresh="true"
         successUrl=" http://8261-54-76-172-136.eu.ngrok.io/refresh/success"
         failureUrl=" http://8261-54-76-172-136.eu.ngrok.io/refresh/failure"
-      ></certua-ob-institution-management>
+      ></certua-ob-institution-selection>
     </div>
   </div>
+  {{apiConfig}}
   <div class="row">
     <div class="col">
-      <routerLink to="/Start">
-        <button class="btn btn-link">Go to Start</button>
+      <routerLink to="/accounts">
+        <button class="btn btn-link">Cancel</button>
       </routerLink>
     </div>
   </div>

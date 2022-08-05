@@ -13,6 +13,6 @@ declare global {
 }
 
 const myApp = createApp(App).use(store).use(router);
-myApp.config.compilerOptions.isCustomElement = (tag: string) => tag.startsWith('certua');
+myApp.config.compilerOptions.isCustomElement = (tag: string) =>
+  tag.startsWith('certua');
 myApp.mount('#app');
-//Vue.use(BootstrapVueIcons);
