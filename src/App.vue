@@ -24,6 +24,17 @@
     <template #okButtonText>Remove</template>
   </modal-component-vue>
   <modal-component-vue
+    title="Custom Consent"
+    :data="consentData"
+    ref="customConsentModal"
+  >
+    <template #body
+      ><div class="container">
+        <p>consent text</p>
+      </div>
+    </template>
+  </modal-component-vue>
+  <modal-component-vue
     title=""
     :data="utilityShellData"
     ref="utilityShellModal"
@@ -57,9 +68,9 @@ import { tap } from 'rxjs';
 import ModalComponentVue from '@/components/ModalComponent.vue';
 
 const modalRef = ref<HTMLElement | null>(null);
-let modal: Modal;
 let revokeModal = ref(ModalComponentVue);
 let consentModal = ref(ModalComponentVue);
+let customConsentModal = ref(ModalComponentVue);
 let utilityShellModal = ref(ModalComponentVue);
 
 let revokeData = ref('');
@@ -69,25 +80,22 @@ let consentIsRefresh = false;
 const apiConfig = localStorage.getItem('apiConfig') ?? '';
 
 const certuaEventBus = new CertuaEventbusService();
-function launchDemoModal() {
-  modal.show();
-}
 
-function changeText() {
-  revokeData.value = 'its changed';
-}
-
-onMounted(() => {
-  if (modalRef.value) {
-    modal = new Modal(modalRef.value);
-  }
-});
 certuaEventBus.showConsentModal$
   .pipe(
     tap((data) => {
       consentData.value = data;
       consentIsRefresh = data.isRefresh;
       consentModal.value.show();
+    })
+  )
+  .subscribe();
+certuaEventBus.showCustomConsentModal$
+  .pipe(
+    tap((data) => {
+      consentData.value = data;
+      consentIsRefresh = data.isRefresh;
+      customConsentModal.value.show();
     })
   )
   .subscribe();

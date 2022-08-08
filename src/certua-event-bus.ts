@@ -14,20 +14,20 @@ export class CertuaEventbusService {
 
   public showRevokeModal$ = this.showRevokeModalSubject.asObservable();
   public showConsentModal$ = this.showConsentModal.asObservable();
-  public showCusotmConsentModal$ = this.showCustomConsentModal.asObservable();
+  public showCustomConsentModal$ = this.showCustomConsentModal.asObservable();
   public showUtilityShellModal$ = this.showUtilityShellModal.asObservable();
 
   public closeDialogEmitter: SubEvent<string> = new SubEvent();
   constructor() {
     window.CertuaEventBus().$on('open-dialog', (event: any) => {
       if (event.type === 'utility-shell') {
-        console.log(
-          'event from daas: open-dialog - utility-shell',
-          JSON.stringify(event)
-        );
+        // console.log(
+        //   'event from daas: open-dialog - utility-shell',
+        //   JSON.stringify(event)
+        // );
         this.showUtilityShell(event.payload);
       } else {
-        console.log('event from daas: open-dialog', JSON.stringify(event));
+        //console.log('event from daas: open-dialog', JSON.stringify(event));
         switch (event.payload.operation) {
           case 'link':
             this.showConsent(event);
@@ -43,21 +43,21 @@ export class CertuaEventbusService {
     });
 
     window.CertuaEventBus().$on('close-dialog', (event: any) => {
-      console.log('event from daas: close-dialog', JSON.stringify(event));
+      //console.log('event from daas: close-dialog', JSON.stringify(event));
       this.closeDialogEmitter.emit('utility-shell');
     });
 
     window.CertuaEventBus().$on('redirection-request', (event: any) => {
-      console.log(
-        'event from daas: redirection-request',
-        JSON.stringify(event)
-      );
+      //console.log(
+      //  'event from daas: redirection-request',
+      //  JSON.stringify(event)
+      //);
       localStorage.setItem('redirectionConf', JSON.stringify(event));
       window.open(event.url, '_self');
     });
 
     window.CertuaEventBus().$on('consent-channel', (event: any) => {
-      console.log('event from daas: consent-channel', JSON.stringify(event));
+      //console.log('event from daas: consent-channel', JSON.stringify(event));
       const consentGiven: boolean = event.data.consentGiven;
       if (consentGiven) {
         store.state.consentData.payload.promise.resolve();
@@ -68,7 +68,7 @@ export class CertuaEventbusService {
     });
 
     window.CertuaEventBus().$on('utility-shell', (event: any) => {
-      console.log('event from daas: utility-shell', JSON.stringify(event));
+      //console.log('event from daas: utility-shell', JSON.stringify(event));
       this.showUtilityShell(event);
     });
   }
@@ -80,35 +80,22 @@ export class CertuaEventbusService {
     if (localStorage.getItem('custom-consent') === 'true') {
       this.showCustomConsentModal.next({
         apiConfig: this.apiConfig,
-        data,
+        data: data.payload,
         isRefresh
       });
     } else {
       this.showConsentModal.next({
         apiConfig: this.apiConfig,
-        data,
+        data: data.payload,
         isRefresh
       });
     }
   }
   showRevokeModal(data: any) {
     this.showRevokeModalSubject.next(data);
-    // this.data = data;
-    // const initialState: ModalOptions<RevokeModalComponent> = {
-    //   initialState: { data },
-    // };
-    // this.modalRef = this.bsModalService.show(RevokeModalComponent, initialState);
   }
 
   showUtilityShell(data: any) {
     this.showUtilityShellModal.next(data);
-    // this.data = data;
-    // const initialState: ModalOptions<UtilityShellComponent> = {
-    //   initialState: {
-    //     apiConfig: this.apiConfig,
-    //     data: data,
-    //   },
-    // };
-    // this.modalRef = this.bsModalService.show(UtilityShellComponent, initialState);
   }
 }

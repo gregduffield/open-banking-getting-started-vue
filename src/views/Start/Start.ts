@@ -13,19 +13,24 @@ export default defineComponent({
       password: '',
       accessToken: '',
       contextToken: '',
-      customConsent: false,
+      customConsent: false
     };
+  },
+  mounted() {
+    this.customConsent = localStorage.getItem('custom-consent') === 'true';
+    this.apiConfig = <string>localStorage.getItem('apiConfig');
   },
   methods: {
     getAccessToken() {
-      const authUrl = 'https://iqdevauth.certua.io/oauth/token?grant_type=client_credentials';
+      const authUrl =
+        'https://iqdevauth.certua.io/oauth/token?grant_type=client_credentials';
 
       axios
         .post(
           authUrl,
           {},
           {
-            auth: { username: this.username, password: this.password },
+            auth: { username: this.username, password: this.password }
           }
         )
         .then((response) => {
@@ -40,31 +45,35 @@ export default defineComponent({
 
       const body = {
         'client.integration.datasource.preference': ['OpenBanking', 'Yodlee'],
-        'client.integration.user.reference': '1', // this is your reference for your client
+        'client.integration.user.reference': '1' // this is your reference for your client
       };
       from(
         axios.post(tokenUrl, body, {
-          headers: { authorization: `Bearer ${this.accessToken}` },
+          headers: { authorization: `Bearer ${this.accessToken}` }
         })
       )
         .pipe(
-          map((response: any) => (this.contextToken = response.data.context_token)),
+          map(
+            (response: any) => (this.contextToken = response.data.context_token)
+          ),
           tap((token) =>
             localStorage.setItem(
               'apiConfig',
               JSON.stringify({
                 url: apiUrl,
-                token: token,
+                token: token
               })
             )
           ),
-          tap((_) => (this.apiConfig = <string>localStorage.getItem('apiConfig'))),
+          tap(
+            (_) => (this.apiConfig = <string>localStorage.getItem('apiConfig'))
+          ),
           tap((_) => (this.showContextToken = false))
         )
         .subscribe();
     },
     consentTypeChanged() {
       localStorage.setItem('custom-consent', String(this.customConsent));
-    },
-  },
+    }
+  }
 });

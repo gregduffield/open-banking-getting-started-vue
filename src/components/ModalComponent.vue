@@ -5,7 +5,6 @@ const props = defineProps(['title', 'data']);
 
 const modalRef = ref<HTMLElement | null>(null);
 let modal: Modal;
-
 onMounted(() => {
   if (modalRef.value) {
     modal = new Modal(modalRef.value);
@@ -21,13 +20,25 @@ function _hide() {
 }
 
 function ok() {
-  props.data.promise.resolve();
+  if (props.data.promise) {
+    props.data.promise.resolve();
+  } else {
+    props.data.data.promise.resolve();
+  }
   modal.hide();
 }
 
 function cancel() {
-  props.data.promise.reject();
+  if (props.data.promise) {
+    props.data.promise.reject();
+  } else {
+    props.data.data.promise.resolve();
+  }
   modal.hide();
+}
+
+function hideFooter() {
+  return props.title === 'Remove account?' || props.title === 'Custom Consent';
 }
 
 defineExpose({ show: _show, hide: _hide });
@@ -56,7 +67,7 @@ defineExpose({ show: _show, hide: _hide });
         <div class="modal-body">
           <slot name="body" />
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" v-show="!!hideFooter()">
           <slot name="footer"></slot>
           <button type="button" class="btn btn-secondary" @click="cancel()">
             Close

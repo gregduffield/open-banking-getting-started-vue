@@ -63,7 +63,12 @@
         </button>
       </routerLink>
       <div class="form-check">
-        <input type="checkbox" id="chkConsent" @change="consentTypeChanged()" />
+        <input
+          type="checkbox"
+          id="chkConsent"
+          v-model="customConsent"
+          @change="consentTypeChanged()"
+        />
         <label class="form-check-label" for="chkConsent">
           Show Custom Consent Dialog
         </label>
@@ -77,17 +82,16 @@
   </div>
   <div class="row mt-3">
     <p>
-      This shows the use of the <code>certua-transaction-list</code> component
-      which allows you to view and filter the transactions for yout accounts.
+      This shows the use of the
+      <code>certua-ob-transaction-list</code> component which allows you to view
+      and filter the transactions for your accounts.
     </p>
     <div class="col">
-      <button
-        class="btn btn-primary btn-block"
-        routerLink="/transactions"
-        disabled="!apiConfig"
-      >
-        View Transactions
-      </button>
+      <routerLink to="/transactions">
+        <button class="btn btn-primary btn-block" :disabled="!apiConfig">
+          View Transactions
+        </button>
+      </routerLink>
     </div>
   </div>
 </div>
