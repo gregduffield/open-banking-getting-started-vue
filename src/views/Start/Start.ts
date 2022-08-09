@@ -13,7 +13,8 @@ export default defineComponent({
       password: '',
       accessToken: '',
       contextToken: '',
-      customConsent: false
+      customConsent: false,
+      userReference: ''
     };
   },
   mounted() {
@@ -45,7 +46,7 @@ export default defineComponent({
 
       const body = {
         'client.integration.datasource.preference': ['OpenBanking', 'Yodlee'],
-        'client.integration.user.reference': '1' // this is your reference for your client
+        'client.integration.user.reference': this.userReference // this is your reference for your client
       };
       from(
         axios.post(tokenUrl, body, {

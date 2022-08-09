@@ -39,9 +39,16 @@
         class="form-control"
         v-model="accessToken"
       />
+      <label for="userReference" class="form-label">User Reference</label>
+      <input
+        id="userReference"
+        type="text"
+        class="form-control"
+        v-model="userReference"
+      />
 
-      <button class="btn btn-primary" @click="getContextToken()">
-        Get Contex Token
+      <button class="btn btn-primary mt-3" @click="getContextToken()">
+        Get Context Token
       </button>
     </div>
   </div>
